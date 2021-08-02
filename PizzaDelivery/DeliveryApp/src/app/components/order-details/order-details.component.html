@@ -1,0 +1,35 @@
+<form [formGroup]="orderForm" *ngIf="orderForm">
+    <div formArrayName="orderItems" *ngFor="let orderItem of orderForm.get('orderItems')['controls']; index as i">
+        <div [formGroupName]="i" class="row">
+            <mat-form-field appearance="fill" class="col" color="accent">
+                <mat-label>Item</mat-label>
+                <mat-select formControlName="itemId" (selectionChange)="orderChange()">
+                    <mat-option *ngFor="let item of menuItems" [value]="item.id" [disabled]="hasUserSelected(item.id)">
+                        {{item.name}} (${{item.price | number : '1.2-2'}})
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="col" color="accent">
+                <mat-label>Quantity</mat-label>
+                <mat-select formControlName="quantity" (selectionChange)="orderChange()">
+                    <mat-option *ngFor="let n of [1,2,3,4,5,6,7,8,9,10]" [value]="n">{{n}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <button mat-raised-button color="accent" (click)="addOrderItem()" *ngIf="addItemDisplayed">Add Item</button>
+        </div>
+        <div>
+            <button mat-raised-button color="warn" *ngIf="orderedItems && orderedItems.length > 1"
+                (click)="removePreviousItem()">Remove Item</button>
+        </div>
+    </div>
+    <div class="row">
+        <button mat-button matStepperNext>Next</button>
+    </div>
+    <div class="row" class="subtotal">
+        <p>Subtotal: ${{total | number : '1.2-2'}}</p>
+    </div>
+</form>

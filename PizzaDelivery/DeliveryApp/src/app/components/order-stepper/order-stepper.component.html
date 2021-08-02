@@ -1,0 +1,37 @@
+<mat-stepper linear="false" #stepper>
+  <mat-step [stepControl]="orderItems" label="Select your items">
+    <app-order-details (orderChanged)="orderChangeHandler($event)"></app-order-details>
+  </mat-step>
+  <mat-step [stepControl]="addressForm" label="Fill out your information">
+    <app-address-form (customerChanged)="customerChangeHandler($event)"></app-address-form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Place Order</ng-template>
+    <div>
+      <mat-form-field appearance="fill" color="accent">
+        <mat-label>Choose a date</mat-label>
+        <input disabled matInput [matDatepicker]="datepicker" [min]="today" [max]="oneWeekFromToday"
+          [value]="deliveryDate" (dateChange)="dateChanged($event)">
+        <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+        <mat-datepicker #datepicker disabled="false">
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="fill" color="accent">
+        <mat-label>Delivery Time</mat-label>
+        <input class="time-picker" matInput aria-label="default time" [ngxTimepicker]="range" [min]="deliveryTime"
+          max="10:00 pm" [value]="deliveryTime" readonly>
+        <ngx-material-timepicker #range [minutesGap]="10" (timeChanged)="timeChanged($event)"></ngx-material-timepicker>
+        <mat-icon matSuffix>schedule</mat-icon>
+      </mat-form-field>
+    </div>
+    <p>Once you're ready click Submit to place your order!</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-raised-button (click)="submitOrder()" [disabled]="submitOrderDisabled" color="accent">Submit</button>
+    </div>
+  </mat-step>
+</mat-stepper>

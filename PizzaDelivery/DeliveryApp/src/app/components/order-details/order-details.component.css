@@ -1,0 +1,22 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    margin-top:10px;
+  }
+  
+  .col {
+    flex: 1;
+    margin-right: 20px;
+  }
+
+  /* .mat-button-base {
+    margin: 8px 8px 8px 0;
+  } */
+
+  form {
+    min-height: 100%;
+  }
+
+  .subtotal {
+    float:right;
+  }

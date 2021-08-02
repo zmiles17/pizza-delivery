@@ -1,0 +1,42 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    margin-top:10px;
+    justify-content: center;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.mat-list-item {
+    min-width: 100%;
+}
+
+.dashboard-card-content {
+    text-align: center;
+}
+
+.grid-container {
+    margin: 20px;
+    height: 100vh;
+}
+
+.dashboard-card {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+}
+
+.mat-grid-list {
+    height: 125vh;
+}
+
+.mat-progress-bar {
+    height: 20px;
+    border-radius: 2px;
+}
+
+  

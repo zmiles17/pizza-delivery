@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\ZMiles\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\ZMiles\\.nuget\\packages"
+    ]
+  }
+}

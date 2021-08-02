@@ -1,0 +1,107 @@
+<div class="row">
+    <mat-form-field appearance="fill" color="accent" class="full-width">
+        <mat-label>Order Tracking Number</mat-label>
+        <input matInput [formControl]="guid" type="text" mask="AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA"
+            [showMaskTyped]="true" [validation]="true" [dropSpecialCharacters]="false" />
+    </mat-form-field>
+</div>
+<div class="row">
+    <button mat-raised-button color="accent" (click)="getOrderStatus()"
+        [disabled]="trackingButtonDisabled">Search</button>
+</div>
+<div class="grid-container">
+    <mat-grid-list cols="2" rowHeight="fit" *ngIf="order">
+        <mat-grid-tile [colspan]="2" [rowspan]="2" class="order-status">
+            <mat-card class="dashboard-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        Order Tracking
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="dashboard-card-content">
+                    <div>
+                        <mat-list>
+                            <mat-list-item *ngIf="order.orderStatus === 0">Received</mat-list-item>
+                            <mat-list-item *ngIf="order.orderStatus === 1">Preparing</mat-list-item>
+                            <mat-list-item *ngIf="order.orderStatus === 2">Baking</mat-list-item>
+                            <mat-list-item *ngIf="order.orderStatus === 3">En route</mat-list-item>
+                            <mat-list-item *ngIf="order.orderStatus === 4">Delivered</mat-list-item>
+                            <mat-list-item>Delivery Date: {{order.timeIn | date: 'shortDate'}}</mat-list-item>
+                            <mat-list-item *ngIf="order.timeInOven">In Oven: {{order.timeInOven + 'Z' | date:
+                                'shortTime'}}
+                            </mat-list-item>
+                            <mat-list-item *ngIf="order.timeOut">Departure Time: {{order.timeOut + 'Z' | date:
+                                'shortTime': '-0400'}}
+                            </mat-list-item>
+                            <mat-list-item *ngIf="order.deliveryTime">Arrival Time: {{order.deliveryTime + 'Z' | date:
+                                'shortTime':
+                                '-0400'}}</mat-list-item>
+                            <mat-list-item>
+                                <mat-progress-bar mode="buffer" [value]="order.orderStatus * 25" color="accent">
+                                </mat-progress-bar>
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile [rowspan]="2" [colspan]="1">
+            <mat-card class="dashboard-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        Order Summary
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <mat-list>
+                        <mat-list-item *ngFor="let orderItem of order.orderItems">
+                            {{orderItem.quantity}} {{orderItem.item.name}} @ ${{orderItem.item.price | number :
+                            '1.2-2'}}
+                        </mat-list-item>
+                        <mat-list-item>Total: ${{orderTotal | number : '1.2-2'}}</mat-list-item>
+                        <mat-list-item><i>Don't forget to tip your driver!</i></mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile [rowspan]="1" [colspan]="1">
+            <mat-card class="dashboard-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        Customer Information
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <mat-list>
+                        <mat-list-item>{{order.customer.name | titlecase}}</mat-list-item>
+                        <mat-list-item>{{order.customer.phone | mask: "(000) 000-0000"}}</mat-list-item>
+                        <mat-list-item>{{order.customer.address | titlecase}}, {{order.customer.city | titlecase}},
+                            {{order.customer.state}}
+                            {{order.customer.zip}}</mat-list-item>
+                    </mat-list>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+        <mat-grid-tile [rowspan]="1" [colspan]="1">
+            <mat-card class="dashboard-card">
+                <mat-card-header>
+                    <mat-card-title>
+                        Store Information
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="dashboard-card-content">
+                    <div>
+                        <mat-list>
+                            <mat-list-item>Store #{{order.store.storeNumber}}</mat-list-item>
+                            <mat-list-item>{{order.store.phone | mask: "(000) 000-0000"}}</mat-list-item>
+                            <mat-list-item>{{order.store.address | titlecase}}, {{order.store.city | titlecase}},
+                                {{order.store.state}}
+                                {{order.store.zip}}
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
